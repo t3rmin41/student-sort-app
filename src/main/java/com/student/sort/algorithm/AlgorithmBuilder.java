@@ -13,11 +13,20 @@ public class AlgorithmBuilder {
       case HEAP  : return new Heap();
       case MERGE : return new Merge();
       default    : return new SortAlgorithm() {
-                                @Override
-                                public void sort(List<Student> students, SortDirection direction) {}
-                                @Override
-                                public void reverseSort(List<Student> students, SortDirection direction) {}
-                              };
+
+        @Override
+        public List<Student> sortAscending(Student[] students) {
+          // TODO Auto-generated method stub
+          return null;
+        }
+
+        @Override
+        public List<Student> sortDescending(Student[] students) {
+          // TODO Auto-generated method stub
+          return null;
+        }
+        
+      };
     }
   }
   
