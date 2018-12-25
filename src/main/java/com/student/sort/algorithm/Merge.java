@@ -3,16 +3,17 @@ package com.student.sort.algorithm;
 import java.util.Arrays;
 import java.util.List;
 import com.student.sort.domain.Student;
+import com.student.sort.enums.SortDirection;
 
 public class Merge extends SortAlgorithm {
 
   @Override
   public List<Student> sortAscending(Student[] students) {
-    sortMergeAscending(students, students.length);
+    sortMerge(students, students.length, SortDirection.ASCENDING);
     return Arrays.asList(students);
   }
 
-  private void sortMergeAscending(Student[] students, int length) {
+  private void sortMerge(Student[] students, int length, SortDirection direction) {
     if (length < 2) {
       return;
     }
@@ -27,13 +28,18 @@ public class Merge extends SortAlgorithm {
       rightArray[i - middle] = students[i];
     }
     
-    sortMergeAscending(leftArray, middle);
-    sortMergeAscending(rightArray, length - middle);
+    sortMerge(leftArray, middle, direction);
+    sortMerge(rightArray, length - middle, direction);
+
+    if (SortDirection.ASCENDING.equals(direction)) {
+      mergeAscending(students, leftArray, rightArray, middle, length - middle);
+    } else if (SortDirection.DESCENDING.equals(direction)) {
+      mergeDescending(students, leftArray, rightArray, middle, length - middle);
+    }
     
-    merge(students, leftArray, rightArray, middle, length - middle);
   }
   
-  private void merge(Student[] students, Student[] leftArray, Student[] rightArray, int left, int right) {
+  private void mergeAscending(Student[] students, Student[] leftArray, Student[] rightArray, int left, int right) {
     int i = 0, j = 0, k = 0;
     while (i < left && j < right) {
       if (leftArray[i].getScore() <= rightArray[j].getScore()) {
@@ -52,9 +58,25 @@ public class Merge extends SortAlgorithm {
 
   @Override
   public List<Student> sortDescending(Student[] students) {
-    // TODO Auto-generated method stub
-    return null;
+    sortMerge(students, students.length, SortDirection.DESCENDING);
+    return Arrays.asList(students);
   }
 
+  private void mergeDescending(Student[] students, Student[] leftArray, Student[] rightArray, int left, int right) {
+    int i = 0, j = 0, k = 0;
+    while (i < left && j < right) {
+      if (leftArray[i].getScore() >= rightArray[j].getScore()) {
+        students[k++] = leftArray[i++];
+      } else {
+        students[k++] = rightArray[j++];
+      }
+    }
+    while (i < left) {
+        students[k++] = leftArray[i++];
+    }
+    while (j < right) {
+        students[k++] = rightArray[j++];
+    }
+  }
   
 }

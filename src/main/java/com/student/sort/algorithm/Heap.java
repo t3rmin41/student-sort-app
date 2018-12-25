@@ -49,9 +49,42 @@ public class Heap extends SortAlgorithm {
   
   @Override
   public List<Student> sortDescending(Student[] students) {
-    // TODO Auto-generated method stub
-    return null;
+    int length = students.length;
+    for (int i = length / 2 - 1; i >= 0; i--) {
+      heapifyDescending(students, length, i);
+    }
+    for (int i = length - 1; i >= 0; i--) {
+      Student temp = students[0];
+      students[0] = students[i];
+      students[i] = temp;
+      heapifyDescending(students, i, 0);
+    }
+    return Arrays.asList(students);
   }
 
+  private void heapifyDescending(Student[] arr, int n, int i) {
+    int smallest = i; // Initialize smallest as root 
+    int l = 2*i + 1; // left = 2*i + 1 
+    int r = 2*i + 2; // right = 2*i + 2 
+
+    // If left child is smaller than root 
+    if (l < n && arr[l].getScore() < arr[smallest].getScore()) {
+      smallest = l;
+    }
+
+    // If right child is smaller than smallest so far 
+    if (r < n && arr[r].getScore() < arr[smallest].getScore()) {
+      smallest = r; 
+    }
+
+    // If smallest is not root 
+    if (smallest != i) {
+      Student swap = arr[i]; 
+      arr[i] = arr[smallest]; 
+      arr[smallest] = swap; 
+      // Recursively heapify the affected sub-tree 
+      heapifyDescending(arr, n, smallest); 
+    } 
+  }
 
 }
