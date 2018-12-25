@@ -92,8 +92,8 @@ public class Main {
       sortAlgorithmSelector.setBounds(205, 84, 119, 20);
       frame.getContentPane().add(sortAlgorithmSelector);
       
-      //JComboBox<SortDirection> sortDirectionSelector = new JComboBox(new SortDirection[] {SortDirection.ASCENDING});
-      JComboBox<SortDirection> sortDirectionSelector = new JComboBox(SortDirection.values());
+      JComboBox<SortDirection> sortDirectionSelector = new JComboBox(new SortDirection[] {SortDirection.ASCENDING});
+      //JComboBox<SortDirection> sortDirectionSelector = new JComboBox(SortDirection.values());
       sortDirectionSelector.setBounds(205, 117, 120, 20);
       frame.getContentPane().add(sortDirectionSelector);
       
