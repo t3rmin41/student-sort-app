@@ -25,7 +25,7 @@ public class Main {
 
   private final JFrame frame = new JFrame();
 
-  private final List<Student> students = new LinkedList<Student>();
+  private List<Student> students = new LinkedList<Student>();
   
   private final TextFileReader textFileReader = new TextFileReader();
 
@@ -67,7 +67,7 @@ public class Main {
   @SuppressWarnings(value = {"rawtypes", "unchecked"})
   private void initialize() {
 
-      frame.setBounds(100, 100, 631, 506);
+      frame.setBounds(100, 100, 544, 506);
       frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       frame.getContentPane().setLayout(null);
 
@@ -76,7 +76,7 @@ public class Main {
       frame.getContentPane().add(lblRecords);
       
       JLabel lblRecordsResult = new JLabel("");
-      lblRecordsResult.setBounds(344, 15, 39, 14);
+      lblRecordsResult.setBounds(344, 15, 154, 14);
       frame.getContentPane().add(lblRecordsResult);
       
       JLabel lblSortingTime = new JLabel("Sorting time");
@@ -84,28 +84,29 @@ public class Main {
       frame.getContentPane().add(lblSortingTime);
       
       JLabel lblSortingTimeResult = new JLabel("");
-      lblSortingTimeResult.setBounds(337, 55, 46, 14);
+      lblSortingTimeResult.setBounds(337, 55, 168, 14);
 
       frame.getContentPane().add(lblSortingTimeResult);
 
       JComboBox<Algorithm> sortAlgorithmSelector = new JComboBox(Algorithm.values());
-      sortAlgorithmSelector.setBounds(486, 52, 119, 20);
+      sortAlgorithmSelector.setBounds(205, 84, 119, 20);
       frame.getContentPane().add(sortAlgorithmSelector);
       
+      //JComboBox<SortDirection> sortDirectionSelector = new JComboBox(new SortDirection[] {SortDirection.ASCENDING});
       JComboBox<SortDirection> sortDirectionSelector = new JComboBox(SortDirection.values());
-      sortDirectionSelector.setBounds(485, 12, 120, 20);
+      sortDirectionSelector.setBounds(205, 117, 120, 20);
       frame.getContentPane().add(sortDirectionSelector);
       
       JLabel lblDirection = new JLabel("Direction");
-      lblDirection.setBounds(393, 15, 66, 14);
+      lblDirection.setBounds(61, 122, 66, 14);
       frame.getContentPane().add(lblDirection);
       
       JLabel lblAlgorithm = new JLabel("Algorithm");
-      lblAlgorithm.setBounds(393, 55, 66, 14);
+      lblAlgorithm.setBounds(60, 89, 66, 14);
       frame.getContentPane().add(lblAlgorithm);
 
       table = new JTable();
-      table.setBounds(10, 141, 479, 315);
+      table.setBounds(27, 159, 471, 299);
       frame.getContentPane().add(table);
       
       JButton btnSelectFile = new JButton("Select file");
@@ -119,16 +120,7 @@ public class Main {
           
           if (returnValue == JFileChooser.APPROVE_OPTION) {
             File selectedFile = jfc.getSelectedFile();
-            students.clear();
-            students.addAll(textFileReader.readFromFile(selectedFile));
-            
-            tableModel.setRowCount(0);
-            for (Student student : students) {
-              tableModel.addRow(new Object[] {student.getTitle(), student.getScore()});
-            }
-            tableModel.fireTableDataChanged();
-            table.setModel(tableModel);
-            
+            drawStudentTable(textFileReader.readFromFile(selectedFile), tableModel, table);
             lblRecordsResult.setText(Integer.toString(students.size()));
           }
         }
@@ -139,12 +131,13 @@ public class Main {
       JButton btnSort = new JButton("Sort");
       btnSort.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          SortDirection direction = (SortDirection) sortAlgorithmSelector.getSelectedItem();
+          SortDirection direction = (SortDirection) sortDirectionSelector.getSelectedItem();
           Algorithm algorithm = (Algorithm) sortAlgorithmSelector.getSelectedItem();
           SortAlgorithm sortAlgorithm = algorithmBuilder.buildAlgorithm(algorithm);
           long startTime = System.currentTimeMillis();
-          sortAlgorithm.sort(students, direction);
+          List<Student> sortedStudents = sortAlgorithm.sort(students, direction);
           long stopTime = System.currentTimeMillis();
+          drawStudentTable(sortedStudents, tableModel, table);
           long elapsedTime = stopTime - startTime;
           lblSortingTimeResult.setText(Long.toString(elapsedTime)+ " ms");
         }
@@ -152,5 +145,16 @@ public class Main {
       btnSort.setBounds(10, 52, 168, 22);
       frame.getContentPane().add(btnSort);
 
+  }
+  
+  private void drawStudentTable(List<Student> studentsToDraw, DefaultTableModel tableModel, JTable table) {
+    students.clear();
+    students.addAll(studentsToDraw);
+    tableModel.setRowCount(0);
+    for (Student student : students) {
+      tableModel.addRow(new Object[] {student.getTitle(), student.getScore()});
+    }
+    tableModel.fireTableDataChanged();
+    table.setModel(tableModel);
   }
 }

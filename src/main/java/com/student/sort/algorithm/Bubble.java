@@ -9,11 +9,10 @@ public class Bubble extends SortAlgorithm {
 
   @Override
   public List<Student> sortAscending(Student[] students) {
-    Student temp = new Student();
     for (int i = 0; i < students.length; i++) {
-      for (int j = 1; j < students.length-1; j++) {
-        if (students[j - 1].getScore() > students[j].getScore()) {
-          temp = students[j-1];
+      for (int j = 1; j < students.length-i; j++) {
+        if (students[j-1].getScore() > students[j].getScore()) {
+          Student temp = students[j-1];
           students[j-1] = students[j];
           students[j] = temp;
         }
@@ -24,12 +23,11 @@ public class Bubble extends SortAlgorithm {
 
   @Override
   public List<Student> sortDescending(Student[] students) {
-    Student temp = new Student();
     for (int i = 0; i < students.length; i++) {
-      for (int j = 1; j < students.length-1; j++) {
-        if (students[j - 1].getScore() < students[j].getScore()) {
-          temp = students[j - 1];
-          students[j - 1] = students[j];
+      for (int j = 1; j < students.length-i; j++) {
+        if (students[j-1].getScore() < students[j].getScore()) {
+          Student temp = students[j-1];
+          students[j-1] = students[j];
           students[j] = temp;
         }
       }
