@@ -34,8 +34,7 @@ public class Main {
   private final String[] tableColumns = {"Student title", "score"};
   
   private DefaultTableModel tableModel = new DefaultTableModel(tableColumns, 0);
-  
-  //private final JTable table = new JTable(tableModel);
+
   private JTable table = new JTable(tableModel);
 
   /**
