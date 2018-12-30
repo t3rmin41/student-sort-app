@@ -38,7 +38,7 @@ public class Main {
 
   private JTable table = new JTable(tableModel);
   
-
+  private JScrollPane tableScrollPane = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
   /**
    * Launch the application.
@@ -106,10 +106,8 @@ public class Main {
       lblAlgorithm.setBounds(60, 89, 66, 14);
       frame.getContentPane().add(lblAlgorithm);
 
-      table = new JTable();
-      JScrollPane scrollPane = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-      scrollPane.setBounds(27, 159, 471, 299);
-      frame.getContentPane().add(scrollPane);
+      tableScrollPane.setBounds(27, 159, 471, 299);
+      frame.getContentPane().add(tableScrollPane);
       
       JButton btnSelectFile = new JButton("Select file");
       btnSelectFile.addActionListener(new ActionListener() {

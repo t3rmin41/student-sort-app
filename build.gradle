@@ -45,6 +45,9 @@ configurations.all {
 }
 
 dependencies {
+    // https://mvnrepository.com/artifact/com.jgoodies/jgoodies-common
+    //compile("com.jgoodies:jgoodies-common:1.8.0")
+    //compile("com.jgoodies:jgoodies-forms:1.8.0")
     // testing
     testCompile("junit:junit:${junitVersion}")
 }
