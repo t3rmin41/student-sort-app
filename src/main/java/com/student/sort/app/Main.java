@@ -14,6 +14,7 @@ import com.student.sort.enums.Algorithm;
 import com.student.sort.enums.SortDirection;
 import com.student.sort.reader.TextFileReader;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.LinkedList;
@@ -36,6 +37,8 @@ public class Main {
   private DefaultTableModel tableModel = new DefaultTableModel(tableColumns, 0);
 
   private JTable table = new JTable(tableModel);
+  
+
 
   /**
    * Launch the application.
@@ -104,8 +107,9 @@ public class Main {
       frame.getContentPane().add(lblAlgorithm);
 
       table = new JTable();
-      table.setBounds(27, 159, 471, 299);
-      frame.getContentPane().add(table);
+      JScrollPane scrollPane = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+      scrollPane.setBounds(27, 159, 471, 299);
+      frame.getContentPane().add(scrollPane);
       
       JButton btnSelectFile = new JButton("Select file");
       btnSelectFile.addActionListener(new ActionListener() {
@@ -154,5 +158,6 @@ public class Main {
     }
     tableModel.fireTableDataChanged();
     table.setModel(tableModel);
+    table.setAutoscrolls(true);
   }
 }
